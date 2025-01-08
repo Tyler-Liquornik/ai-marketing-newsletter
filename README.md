@@ -12,3 +12,4 @@ The goal is to save the owner time by eliminating manual effort, and ensure prof
 - **Backend**: Express
 - **Email Service**: AWS SES
 - **Hosting**: AWS EC2
+- **AI**: ChatGPT
