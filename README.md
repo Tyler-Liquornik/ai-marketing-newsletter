@@ -8,8 +8,8 @@ The goal is to save the owner time by eliminating manual effort, and ensure prof
 
 ## Tech Stack
 
-- **Frontend**: React
+- **Frontend**: React via lovable.dev
 - **Backend**: Express
 - **Email Service**: AWS SES
 - **Hosting**: AWS EC2
-- **AI**: ChatGPT
+- **AI**: ChatGPT API
