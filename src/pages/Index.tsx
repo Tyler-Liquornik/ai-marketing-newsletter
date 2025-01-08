@@ -59,10 +59,10 @@ Your Soccer Jersey Team`;
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
-            Email Marketing Assistant
+            AI Email Marketing Assistant
           </h1>
           <p className="mt-2 text-gray-600">
-            Create and send personalized email campaigns in minutes
+            Create and send personalized email campaigns in seconds
           </p>
         </div>
 
