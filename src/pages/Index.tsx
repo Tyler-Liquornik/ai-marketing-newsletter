@@ -107,38 +107,41 @@ Your Soccer Jersey Team`;
         </div>
 
         <div className="mb-8">
-          <div className="flex justify-between items-center">
-            {["upload", "prompt", "preview"].map((s, index) => (
-              <div
-                key={s}
-                className={`flex items-center ${
-                  index < ["upload", "prompt", "preview"].indexOf(step) + 1
-                    ? "text-primary"
-                    : "text-gray-400"
-                }`}
-              >
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    index < ["upload", "prompt", "preview"].indexOf(step) + 1
-                      ? "bg-primary text-white"
-                      : "bg-gray-200"
-                  }`}
-                >
-                  {index + 1}
-                </div>
-                {index < 2 && (
+          <div className="flex justify-between items-center w-full">
+            {["upload", "prompt", "preview"].map((s, index) => {
+              const isActive = index < ["upload", "prompt", "preview"].indexOf(step) + 1;
+              return (
                   <div
-                    className={`h-1 w-24 mx-2 ${
-                      index < ["upload", "prompt", "preview"].indexOf(step)
-                        ? "bg-primary"
-                        : "bg-gray-200"
-                    }`}
-                  />
-                )}
-              </div>
-            ))}
+                      key={s}
+                      className={`flex items-center ${
+                          index !== 2 ? "flex-1" : ""
+                      } ${isActive ? "text-primary" : "text-gray-400"}`}
+                  >
+                    {/* Circle */}
+                    <div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                            isActive ? "bg-primary text-white" : "bg-gray-200"
+                        }`}
+                    >
+                      {index + 1}
+                    </div>
+
+                    {/* Horizontal bar */}
+                    {!(index == 2) && (
+                        <div
+                            className={`h-1 flex-1 mx-2 ${
+                                index < ["upload", "prompt", "preview"].indexOf(step)
+                                    ? "bg-primary"
+                                    : "bg-gray-200"
+                            }`}
+                        />
+                    )}
+                  </div>
+              );
+            })}
           </div>
         </div>
+
 
         <Card className="p-6">
           {renderStep()}

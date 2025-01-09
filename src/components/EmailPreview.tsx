@@ -35,9 +35,6 @@ export const EmailPreview = ({ content, onSend }: EmailPreviewProps) => {
           className="min-h-[300px] mb-4"
         />
         <div className="flex justify-end space-x-4">
-          <Button variant="outline" onClick={() => setEditedContent(content)}>
-            Reset
-          </Button>
           <Button onClick={handleSend}>
             Send Email
           </Button>
