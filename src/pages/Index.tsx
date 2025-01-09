@@ -4,20 +4,23 @@ import { PromptForm } from "@/components/PromptForm";
 import { EmailPreview } from "@/components/EmailPreview";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import {EmailRecipient} from "@/lib/EmailRecipient.ts";
 
 type Step = "upload" | "prompt" | "preview";
 
 const Index = () => {
   const [step, setStep] = useState<Step>("upload");
-  const [file, setFile] = useState<File | null>(null);
+  const [emailRecipientsData, setEmailRecipientsData] = useState<EmailRecipient[] | null>(null);
   const [emailContent, setEmailContent] = useState("");
   const { toast } = useToast();
 
-  const handleFileAccepted = (acceptedFile: File) => {
-    setFile(acceptedFile);
+  const handleFileAccepted = (acceptedEmailRecipientsData: EmailRecipient[]) => {
+    setEmailRecipientsData(acceptedEmailRecipientsData);
+    console.log(acceptedEmailRecipientsData);
     setStep("prompt");
   };
 
+  // TODO: plug ChatGPT API here
   const handlePromptSubmit = async (data: { jersey: string; promotion: string }) => {
     // In a real implementation, this would call your API to generate content
     const sampleContent = `Dear [First Name],
@@ -36,11 +39,48 @@ Your Soccer Jersey Team`;
   };
 
   const handleSend = async (finalContent: string) => {
-    // In a real implementation, this would send the email through your backend
-    toast({
-      title: "Success!",
-      description: "Your email campaign has been scheduled for sending.",
-    });
+    if (!emailRecipientsData || emailRecipientsData.length === 0) {
+      toast({
+        title: "Error",
+        description: "No email recipients found. Please upload a file first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    console.log(emailRecipientsData);
+
+    try {
+      const response = await fetch(
+          "https://uv56jskeibw75ccaovmcck5mam0jbbiu.lambda-url.us-east-2.on.aws/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              emailRecipients: emailRecipientsData,
+              emailContent: finalContent,
+            }),
+          });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.log(error.message);
+        throw new Error(error.message || "Failed to send emails.");
+      }
+
+      toast({
+        title: "Success!",
+        description: "Your email campaign has been scheduled for sending.",
+      });
+    } catch (error: unknown) {
+      console.error("Error sending emails:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send emails.",
+        variant: "destructive",
+      });
+    }
   };
 
   const renderStep = () => {

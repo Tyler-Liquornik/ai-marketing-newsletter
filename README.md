@@ -9,7 +9,6 @@ The goal is to save the owner time by eliminating manual effort, and ensure prof
 ## Tech Stack
 
 - **Frontend**: React
-- **Backend**: Express
+- **Backend**: AWS Lambda
 - **Email Service**: AWS SES
-- **Hosting**: AWS EC2
-- **AI**: ChatGPT
+- **AI**: ChatGPT API
