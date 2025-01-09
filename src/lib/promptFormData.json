@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Featured Jersey",
+    "textBoxPrompt": "Describe the main jersey you want to spotlight...",
+    "example": "We have a limited-edition Real Madrid jersey in red and silver"
+  },
+  {
+    "title": "Promotion Details",
+    "textBoxPrompt": "Enter the promotion or discount...",
+    "example": "10% off for all pre-season orders"
+  },
+  {
+    "title": "New Arrival Alert",
+    "textBoxPrompt": "Highlight a recently added retro jersey...",
+    "example": "Just in! Check out the 1998 Brazil World Cup jersey in vibrant yellow and green!"
+  },
+  {
+    "title": "Collector’s Spotlight",
+    "textBoxPrompt": "Share details about a jersey that stands out for collectors...",
+    "example": "This week’s spotlight: The 1994 AC Milan home jersey worn by legends!"
+  },
+  {
+    "title": "Limited-Time Offer",
+    "textBoxPrompt": "Specify a jersey and a special discount or deal...",
+    "example": "Score 15% off the retro Manchester United jersey until Sunday!"
+  },
+  {
+    "title": "Behind the Design",
+    "textBoxPrompt": "Tell the story or history behind a jersey’s design...",
+    "example": "Discover the inspiration behind the iconic 1990 West Germany jersey design!"
+  },
+  {
+    "title": "Jersey of the Week",
+    "textBoxPrompt": "Highlight your favorite retro jersey for the week...",
+    "example": "Jersey of the Week: The 1996 Juventus away jersey in bold blue and yellow!"
+  },
+  {
+    "title": "Customer Favorites",
+    "textBoxPrompt": "Highlight a jersey that customers love or has top ratings...",
+    "example": "Fan-favorite: The 1986 Argentina jersey worn during Maradona’s legendary run!"
+  },
+  {
+    "title": "Perfect Gift Idea",
+    "textBoxPrompt": "Suggest a jersey that makes a great gift...",
+    "example": "The perfect gift for soccer fans: The 2000 Barcelona jersey in pristine red and blue!"
+  },
+  {
+    "title": "Match Memories",
+    "textBoxPrompt": "Relive a famous game associated with a jersey...",
+    "example": "Relive history: The jersey from England’s dramatic 1996 Euro semifinal!"
+  },
+  {
+    "title": "Seasonal Picks",
+    "textBoxPrompt": "Promote jerseys ideal for the current season or trends...",
+    "example": "Gear up for winter: Long-sleeve retro jerseys like the 1997 Arsenal classic!"
+  },
+  {
+    "title": "Social Media Challenge",
+    "textBoxPrompt": "Encourage customers to share pictures wearing your jerseys...",
+    "example": "Join the #RetroSoccerChallenge: Post your photo in the 1982 Italy jersey to win!"
+  }
+]
