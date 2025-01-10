@@ -21,7 +21,7 @@ export const handler = async (event) => {
           "Access-Control-Allow-Headers": "Content-Type",
         },
         body: JSON.stringify({
-          message: "Invalid request: Missing email recipients or email content.",
+          message: "Invalid request: gitMissing email recipients or email content.",
         }),
       };
     }
