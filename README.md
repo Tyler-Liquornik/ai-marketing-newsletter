@@ -1,6 +1,6 @@
 # Soccer Jersey Marketing Email App
 
-App: https://ai-marketing-newsletter-ojg4fg8r5-tyler-liquorniks-projects.vercel.app/
+Link: https://ai-marketing-newsletter.vercel.app
 
 This is a simple MVP application designed to help a local small business in London, Ontario, streamline the process of crafting and sending marketing emails. Built specifically for a soccer jersey business as part of the Ivey Business School course Learning Through Action (3323K), the app simplifies email marketing by offering an intuitive, efficient workflow.
 
