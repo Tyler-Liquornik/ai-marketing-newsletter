@@ -21,7 +21,7 @@ The application allows the business owner to:
 
 ![Email](./images/email.png)
 
-The primary goal is to save the owner time by automating repetitive tasks, eliminating the need for manual email creation and distribution. This efficiency ensures that marketing campaigns are executed professionally, with polished, personalized emails that resonate with the target audience.
+The primary goal is to save the owner time by automating repetitive tasks, eliminating the need for manual email creation and distribution. This efficiency ensures that marketing campaigns are executed professionally, with polished, personalized emails that resonate with the target audience. It should be noted that this is an MVP built in 48 hours, and certainly requires more work to provide more value with better AI engineering and production quality usage of AWS.
 
 By empowering the business owner to focus on growing the business instead of getting bogged down by manual processes, the app delivers both convenience and value.
 
