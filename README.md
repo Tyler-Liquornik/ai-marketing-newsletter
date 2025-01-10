@@ -7,8 +7,16 @@ This is a simple MVP application designed to help a local small business in Lond
 The application allows the business owner to:
 
 - Upload a list of email addresses directly from an Excel file, ensuring quick and accurate input of customer information.
+
+![Upload Excel File](./images/upload-excel-file.png)
+  
 - Create custom email templates tailored to different promotions, events, or announcements, providing flexibility in marketing strategies.
+
+![Custom Email Template](./images/custom-email-template.png)
+
 - Send out campaigns in bulk with minimal effort, ensuring timely and professional communication with customers.
+
+  ![Send Bulk Campaigns](./images/send-bulk-campaigns.png)
 
 The primary goal is to save the owner time by automating repetitive tasks, eliminating the need for manual email creation and distribution. This efficiency ensures that marketing campaigns are executed professionally, with polished, personalized emails that resonate with the target audience.
 
