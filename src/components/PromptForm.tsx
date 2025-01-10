@@ -3,137 +3,122 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-
+import { useToast } from "@/hooks/use-toast";
 import promptFormData from "@/lib/promptFormData.json";
-
-interface PromptData {
-  jersey: string;
-  promotion: string;
-  newArrivalAlert: string;
-  collectorsSpotlight: string;
-  limitedTimeOffer: string;
-  behindTheDesign: string;
-  jerseyOfTheWeek: string;
-  customerFavorites: string;
-  perfectGiftIdea: string;
-  matchMemories: string;
-  seasonalPicks: string;
-  socialMediaChallenge: string;
-}
+import prompts from "@/lib/prompts.json";
+import Groq from "groq-sdk";
 
 interface PromptFormProps {
-  onSubmit: (data: PromptData) => void;
+  onGenerated: (generatedEmail: string) => void;
+  onNavigate: (direction: "next" | "prev") => void;
+  currentIndex: number;
 }
 
-const fieldMap: Record<string, keyof PromptData> = {
-  "Featured Jersey": "jersey",
-  "Promotion Details": "promotion",
-  "New Arrival Alert": "newArrivalAlert",
-  "Collector’s Spotlight": "collectorsSpotlight",
-  "Limited-Time Offer": "limitedTimeOffer",
-  "Behind the Design": "behindTheDesign",
-  "Jersey of the Week": "jerseyOfTheWeek",
-  "Customer Favorites": "customerFavorites",
-  "Perfect Gift Idea": "perfectGiftIdea",
-  "Match Memories": "matchMemories",
-  "Seasonal Picks": "seasonalPicks",
-  "Social Media Challenge": "socialMediaChallenge",
-};
+export const PromptForm = ({ onGenerated, onNavigate, currentIndex }: PromptFormProps) => {
+  const [userInput, setUserInput] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
-export const PromptForm = ({ onSubmit }: PromptFormProps) => {
-  const [formData, setFormData] = useState<PromptData>({
-    jersey: "",
-    promotion: "",
-    newArrivalAlert: "",
-    collectorsSpotlight: "",
-    limitedTimeOffer: "",
-    behindTheDesign: "",
-    jerseyOfTheWeek: "",
-    customerFavorites: "",
-    perfectGiftIdea: "",
-    matchMemories: "",
-    seasonalPicks: "",
-    socialMediaChallenge: "",
-  });
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleChange = (field: keyof PromptData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const handleInputChange = (value: string) => {
+    setUserInput(value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
-  };
 
-  const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
+    if (!userInput.trim()) {
+      toast({
+        title: "Input Required",
+        description: "Please fill in the input for the current prompt.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const prependExplanation = `
+        You are an AI assistant tasked with generating professional marketing email content based on user-provided inputs. 
+        The user will provide details that will replace placeholders in a predefined template. 
+        Respond concisely, ensuring the tone is polite, professional, and appropriate for email communication.
+        Please start generating the email as you would after any introduction, as the text "Dear Name" will be added to your response later.
+        Please ensure then once that your response is added to 'Dear Name' at the top, the email should be ready to send as is there with no placeholders for the user to fill.
+        The small business sells retro soccer jerseys, and wants to just start out its marketing newsletter, so ensure that audience would enjoy the read while still doing the marketing job described in your prompt.
+        The first sentence should start capitalized. Add a signoff from the company.
+      `;
+
+      const currentPrompt = prompts[currentIndex].prompt;
+      const finalPrompt = prependExplanation + "\n\n" + currentPrompt.replace("%s", userInput);
+
+      // Initialize Groq client
+      // Don't care about exposing api key, grow is free and this is a small personal project
+      const groq = new Groq({
+        apiKey: "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",
+        dangerouslyAllowBrowser: true
+      });
+
+      // Generate response using Groq
+      const response = await groq.chat.completions.create({
+        messages: [
+          {
+            role: "user",
+            content: finalPrompt,
+          },
+        ],
+        model: "llama-3.3-70b-versatile",
+      });
+
+      const generatedText = response.choices[0]?.message?.content || "";
+
+      onGenerated(`Dear, [First Name]\n\n${generatedText}`);
+      toast({
+        title: "Success",
+        description: "Email content generated successfully.",
+      });
+    } catch (error: unknown) {
+      console.error("Error generating email:", error);
+      toast({
+        title: "Error",
+        description: "Failed to generate email. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleNext = () => {
-    if (currentIndex < promptFormData.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    }
-  };
-
-  const currentPrompt = promptFormData[currentIndex];
-  const fieldKey = fieldMap[currentPrompt.title];
   const isFirstPrompt = currentIndex === 0;
-  const isLastPrompt = currentIndex === promptFormData.length - 1;
-  let alignmentClass = "justify-between";
-  if (isFirstPrompt && !isLastPrompt) {
-    alignmentClass = "justify-end";
-  } else if (!isFirstPrompt && isLastPrompt) {
-    alignmentClass = "justify-start";
-  }
+  const isLastPrompt = currentIndex === prompts.length - 1;
 
   return (
       <form onSubmit={handleSubmit} className="space-y-6 animate-slide-up">
         <Card className="p-6 space-y-4">
           <div className="space-y-2">
-            <Label htmlFor={fieldKey}>{currentPrompt.title}</Label>
+            <Label htmlFor="promptInput">{promptFormData[currentIndex].title}</Label>
             <Textarea
-                id={fieldKey}
-                placeholder={currentPrompt.textBoxPrompt}
-                value={formData[fieldKey]}
-                onChange={(e) => handleChange(fieldKey, e.target.value)}
+                id="promptInput"
+                placeholder={promptFormData[currentIndex].textBoxPrompt}
+                value={userInput}
+                onChange={(e) => handleInputChange(e.target.value)}
                 className="min-h-[80px]"
             />
-            <p className="text-sm text-gray-500">
-              Example: {currentPrompt.example}
-            </p>
+            <p className="text-sm text-gray-500">Example: {promptFormData[currentIndex].example}</p>
           </div>
-
-          <div className={`flex items-center ${alignmentClass}`}>
+          <div className="flex justify-between">
             {!isFirstPrompt && (
-                <Button
-                    variant="outline"
-                    type="button"
-                    onClick={handlePrev}
-                    className="flex items-center justify-center"
-                >
-                  <span className="mr-2">&larr;</span>
-                  Prev
+                <Button variant="outline" type="button" onClick={() => onNavigate("prev")}>
+                  &larr; Prev
                 </Button>
             )}
             {!isLastPrompt && (
-                <Button
-                    variant="outline"
-                    type="button"
-                    onClick={handleNext}
-                    className="flex items-center justify-center"
-                >
-                  Next
-                  <span className="ml-2">&rarr;</span>
+                <Button variant="outline" type="button" onClick={() => onNavigate("next")}>
+                  Next &rarr;
                 </Button>
             )}
           </div>
-
-          <Button type="submit" className="w-full mt-6">
-            Generate Email
+          <Button type="submit" className="w-full mt-6" disabled={isSubmitting}>
+            {isSubmitting ? "Generating..." : "Generate Email"}
           </Button>
         </Card>
       </form>

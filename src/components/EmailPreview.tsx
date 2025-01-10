@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 
 interface EmailPreviewProps {
   content: string;
-  onSend: (finalContent: string) => void;
+  onSend: (finalContent: string) => void; // Sends the finalized email
 }
 
 export const EmailPreview = ({ content, onSend }: EmailPreviewProps) => {
@@ -22,24 +22,24 @@ export const EmailPreview = ({ content, onSend }: EmailPreviewProps) => {
       });
       return;
     }
-    onSend(editedContent);
+    onSend(editedContent); // Send the edited email
   };
 
   return (
-    <div className="space-y-6 animate-slide-up">
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold mb-4">Preview & Edit</h3>
-        <Textarea
-          value={editedContent}
-          onChange={(e) => setEditedContent(e.target.value)}
-          className="min-h-[300px] mb-4"
-        />
-        <div className="flex justify-end space-x-4">
-          <Button onClick={handleSend}>
-            Send Email
-          </Button>
-        </div>
-      </Card>
-    </div>
+      <div className="space-y-6 animate-slide-up">
+        <Card className="p-6">
+          <h3 className="text-lg font-semibold mb-4">Preview & Edit</h3>
+          <Textarea
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+              className="min-h-[300px] mb-4"
+          />
+          <div className="flex justify-end space-x-4">
+            <Button onClick={handleSend}>
+              Send Email
+            </Button>
+          </div>
+        </Card>
+      </div>
   );
 };
