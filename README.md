@@ -1,6 +1,6 @@
 # Soccer Jersey Marketing Email App
 
-This is a simple MVP application designed to help small businesses streamline the process of crafting and sending marketing emails. Built specifically for a soccer jersey business as part of the Ivey Business School course Learning Through Action (3323K), the app simplifies email marketing by offering an intuitive, efficient workflow.
+This is a simple MVP application designed to help a local small business in London, Ontario, streamline the process of crafting and sending marketing emails. Built specifically for a soccer jersey business as part of the Ivey Business School course Learning Through Action (3323K), the app simplifies email marketing by offering an intuitive, efficient workflow.
 
 The application allows the business owner to:
 
